@@ -1,7 +1,10 @@
 package App
 
+import scala.io.StdIn
+
+
 object GreeterApplication extends App {
     def greet(name : String) :Unit = println("Hello " + name)
-    val name = "Connor"
+    val name = StdIn.readLine("What is your name? ")
   greet(name)
 }
