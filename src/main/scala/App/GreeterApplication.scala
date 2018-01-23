@@ -2,17 +2,26 @@ package App
 
 import scala.io.StdIn
 
+class Person(name : String) {
 
-object GreeterApplication extends App {
-  def greet(name: String): Unit = {
-    if (name == "Michael") {
-      println("Clear off you mug")
+  def speak(): String = {
+    if (name == "Jeff") {
+      "You don't get a hello."
     } else {
-      println(s"Hello $name")
+      "Hello " + name
     }
   }
+}
 
-  val name = StdIn.readLine("What is your name? ")
+object Prompt {
 
-  greet(name)
+  def ask(message : String) = StdIn.readLine(message)
+
+
+}
+
+object GreeterApplication extends App {
+  val name = Prompt.ask("What is your name? ")
+  val p = new Person(name)
+  println(p.speak())
 }
