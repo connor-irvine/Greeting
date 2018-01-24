@@ -38,6 +38,8 @@ class Person(name : String , age: Int) {
   }
 }
 
+
+
 object Prompt {
 
   def ask(message : String) = StdIn.readLine(message)
