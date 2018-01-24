@@ -27,4 +27,4 @@ class Warrior(health: Int , resource: Resource , point: Point) extends Character
   override def attack(): String = "I swinging my axe"
 }
 
-  abstract class Enemy(health: Int , resource: Resource , point: Point) extends Character
+  abstract class Enemy(health: Int , resource: Gold , point: Point) extends Character(health, resource, point)
