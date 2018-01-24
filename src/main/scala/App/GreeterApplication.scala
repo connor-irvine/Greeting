@@ -1,14 +1,39 @@
 package App
 
+import java.time.temporal.TemporalAmount
+
 import scala.io.StdIn
 
-class Person(name : String) {
+abstract class BankAccount(accountNumber : String, val balance: Double) {
+
+  def withdraw(amount: Double)  : BankAccount
+  def deposit(amount: Double) : BankAccount
+
+}
+
+class SavingsAccount(accountNumber: String, balance : Double) extends BankAccount(accountNumber, balance) {
+
+  override def deposit(amount: Double): SavingsAccount = new SavingsAccount(accountNumber, balance + amount)
+  override def withdraw(amount: Double): SavingsAccount = new SavingsAccount(accountNumber, balance - amount)
+
+}
+class cashISA(accountNumber: String, balance : Double) extends BankAccount(accountNumber, balance){
+  override def deposit(amount: Double): cashISA = new cashISA(accountNumber, balance + amount)
+  override def withdraw(amount: Double): cashISA = {
+    println("Your fucked mate get some real money")
+    this
+  }
+}
+
+class Person(name : String , age: Int) {
+
+  private val years : String = if(age == 1) "year" else "years"
 
   def speak(): String = {
     if (name == "Jeff") {
       "You don't get a hello."
     } else {
-      "Hello " + name
+      "Hello " + name + " " + "you are" + " " + age + " " + years + " old"
     }
   }
 }
@@ -21,7 +46,18 @@ object Prompt {
 }
 
 object GreeterApplication extends App {
+
+  val cashISA = new cashISA("12345" , 100)
+  val cashISA100 = cashISA.withdraw(100)
+
+  val savingsAccount = new SavingsAccount("12345", 100.00)
+  val savingsPlus100 = savingsAccount.deposit(50.00)
+
   val name = Prompt.ask("What is your name? ")
-  val p = new Person(name)
+  val age = Prompt.ask("What is your age? ")
+
+  val p : Person = new Person(name, age.toInt)
   println(p.speak())
+  println(savingsAccount.balance)
+
 }
